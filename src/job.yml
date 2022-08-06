@@ -9,6 +9,6 @@ inputs:
     mode: eval_download
   reg_rate: 0.01
 environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
-compute: azureml:varmag3
+compute: azureml:dev-cluster
 experiment_name: diabetes-train-localdata
 description: diabetes-train-localdata
