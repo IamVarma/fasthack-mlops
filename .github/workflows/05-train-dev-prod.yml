@@ -1,4 +1,4 @@
-name: Manually trigger an Azure Machine Learning job
+name: Trigger Dev and Prod Training
 
 on:
   workflow_dispatch:
