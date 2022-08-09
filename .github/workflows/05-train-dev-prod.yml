@@ -39,4 +39,4 @@ jobs:
       with:
         creds: ${{secrets.AZURE_CREDENTIALS_PROD}}
     - name: Run training jobs
-      run: az ml job create -f src/job.yml --resource-group rg-prod-mlops --workspace-name prod-mlops --stream
+      run: az ml job create -f src/job-prod.yml --resource-group rg-prod-mlops --workspace-name prod-mlops --stream
