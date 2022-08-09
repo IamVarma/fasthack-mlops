@@ -1,0 +1,42 @@
+name: Manually trigger an Azure Machine Learning job
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+
+jobs:
+  dev-train:
+    name: Train-Dev-Model
+    runs-on: ubuntu-latest
+    environment: dev-mlops
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@main
+    - name: Install az ml extension
+      run: az extension add -n ml -y
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: Run training jobs
+      run: az ml job create -f src/job.yml --resource-group rg-dev-mlops --workspace-name dev-mlops --stream
+
+  prod-train:
+    name: Train-Prod-Model
+    runs-on: ubuntu-latest
+    environment: prod-mlops
+    needs: dev-train
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@main
+    - name: Install az ml extension
+      run: az extension add -n ml -y 
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS_PROD}}
+    - name: Run training jobs
+      run: az ml job create -f src/job.yml --resource-group rg-prod-mlops --workspace-name prod-mlops --stream
