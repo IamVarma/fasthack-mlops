@@ -39,4 +39,9 @@ jobs:
       with:
         creds: ${{secrets.AZURE_CREDENTIALS_PROD}}
     - name: Run training jobs
-      run: az ml job create -f src/job-prod.yml --resource-group rg-prod-mlops --workspace-name prod-mlops --stream
+      run: az ml job create -f src/job-prod.yml --resource-group rg-prod-mlops --workspace-name prod-mlops -a job_metadata.yml --stream
+    - name: Register Model
+      run: |
+        jobname=$(cat test.tt | grep ^name: | cut -d: -f2 | xargs)
+        echo $jobname
+        az ml model create -f src/register-model.yml -p "azureml://jobs/${jobname}/outputs/artifacts/paths/model"

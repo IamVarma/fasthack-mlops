@@ -1,0 +1,4 @@
+$schema: https://azuremlschemas.azureedge.net/latest/model.schema.json
+name: diabetes-prod-model
+type: mlflow_model
+description: Model created from Job Training model directory.
