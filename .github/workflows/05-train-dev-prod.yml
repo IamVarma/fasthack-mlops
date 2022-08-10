@@ -44,4 +44,4 @@ jobs:
       run: |
         jobname=$(cat job_metadata.yml | grep ^name: | cut -d: -f2 | xargs)
         echo $jobname
-        az ml model create -f src/register-model.yml -p "azureml://jobs/${jobname}/outputs/artifacts/paths/model --resource-group rg-prod-mlops --workspace-name prod-mlops"
+        az ml model create -f src/register-model.yml -p "azureml://jobs/${jobname}/outputs/artifacts/paths/model" --resource-group rg-prod-mlops --workspace-name prod-mlops
